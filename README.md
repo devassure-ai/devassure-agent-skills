@@ -32,6 +32,16 @@ After the skill is installed where Claude Code looks for skills (see below), you
 
 ## Installing this skill
 
+### Install with skill.sh
+
+[![Install with skills](https://skills.sh/badge.svg)](https://skills.sh/devassure-ai/devassure-agent-skills/devassure)
+
+Skill can be installed in the project directory using:
+
+```bash
+npx skills add devassure-ai/devassure-agent-skills
+```
+
 ### From the Claude console
 
 1. In the **Claude** console, run a prompt such as: **Install the DevAssure skill from https://github.com/devassure-ai/devassure-agent-skills**
@@ -56,6 +66,7 @@ ln -s /path/to/devassure-cli-skills/skills/devassure ~/.claude/skills/devassure
 mkdir -p .claude/skills
 ln -s /path/to/devassure-cli-skills/skills/devassure .claude/skills/devassure
 ```
+
 
 See [Where skills live](https://docs.anthropic.com/en/docs/claude-code/skills#where-skills-live) for enterprise, plugin, and monorepo paths.
 

@@ -1,7 +1,14 @@
 ---
 name: devassure
 description: >
-  Helps you set up, configure, and use the **DevAssure CLI** (`@devassure/cli`) — a command-line tool for running end-to-end UI tests from natural language instructions and YAML/CSV files.
+  Use when the user wants to install, configure, or run end-to-end UI tests
+  with DevAssure CLI (@devassure/cli). Triggers for: devassure init,
+  devassure run-tests, writing YAML test cases, CI/CD token setup,
+  .devassure/ folder structure, or any mention of DevAssure.
+license: MIT
+metadata:
+  author: devassure-ai
+  version: "1.0"
 ---
 
 # DevAssure Skill
