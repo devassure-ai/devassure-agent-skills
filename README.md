@@ -34,7 +34,7 @@ After the skill is installed where Claude Code looks for skills (see below), you
 
 ### From the Claude console
 
-1. In the **Claude** console, run a prompt such as: **Install the DevAssure skill from https://github.com/test-plus-plus/devassure-cli-skills**
+1. In the **Claude** console, run a prompt such as: **Install the DevAssure skill from https://github.com/devassure-ai/devassure-agent-skills**
 2. **Restart** your Claude session so the skill loads and you can use it.
 3. Invoke **`/devassure`** or ask about DevAssure in natural language.
 
