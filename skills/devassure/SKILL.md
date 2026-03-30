@@ -64,7 +64,9 @@ This creates a `.devassure/` folder with:
 
 ### 3. Write test cases
 
-Test cases are YAML files in `.devassure/tests/`. Each file has:
+Test cases are YAML files in `.devassure/tests/`.
+
+**Single test** — one case per file as a mapping:
 
 ```yaml
 summary: Login and verify dashboard
@@ -77,6 +79,27 @@ priority: P0
 tags:
   - smoke
   - login
+```
+
+**Multiple tests** — several cases in the same file when they belong to the same group or feature. Use a top-level list (each item is one test):
+
+```yaml
+- summary: Login and verify dashboard
+  steps:
+    - Open the application url
+    - Log in with admin credentials from test data
+    - Verify dashboard loads and shows admin menu
+    - Log out
+  priority: P0
+  tags: [smoke, login]
+
+- summary: Login and verify user name with welcome message
+  steps:
+    - Open the application url
+    - Log in with admin credentials from test data
+    - Verify dashboard the welcome message contains the user name
+  priority: P2
+  tags: [login]
 ```
 
 Only `summary` and `steps` are required. Steps are written in **natural language** — the DevAssure AI agent interprets and executes them in a browser.

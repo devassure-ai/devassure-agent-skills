@@ -39,7 +39,7 @@ If you use a **VPN**, ensure these hosts are allowed so DevAssure (including CLI
 | `nodejs.org` |
 | `registry.npmjs.org` |
 | `googleapis.com` |
-| `tpp-ai-core-cb5f0b000f56.herokuapp.com` |
+| `devassure-llm-2e2fa73b953b.herokuapp.com` |
 
 Verify connectivity (e.g. DNS resolution and HTTPS) to these hosts from your VPN profile. Blocking any of them can cause login failures, install failures, or runtime errors.
 

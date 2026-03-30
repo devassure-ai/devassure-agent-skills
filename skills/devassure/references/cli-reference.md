@@ -1,5 +1,7 @@
 # DevAssure CLI — Complete Reference
 
+Package and install details: [@devassure/cli on npm](https://www.npmjs.com/package/@devassure/cli).
+
 ## Table of Contents
 1. [All Commands](#all-commands)
 2. [Run Tests Options](#run-tests-options)
