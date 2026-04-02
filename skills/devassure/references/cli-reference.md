@@ -33,8 +33,10 @@ Package and install details: [@devassure/cli on npm](https://www.npmjs.com/packa
 | Command | Description |
 |---------|-------------|
 | `devassure run-tests` (alias: `run`) | Run tests from current directory |
+| `devassure test` | Run tests scoped to git code changes |
 | `devassure resume --last` | Resume last test session |
 | `devassure resume --session-id <id>` | Resume specific session |
+| `devassure resume --id <id>` | Alias for `--session-id <id>` |
 
 ### Reports & Statistics
 | Command | Description |
@@ -46,6 +48,11 @@ Package and install details: [@devassure/cli on npm](https://www.npmjs.com/packa
 | `devassure summary --last` | Print summary for last session |
 | `devassure summary --last --json` | Print summary as JSON |
 | `devassure stats` | Show session count, scenario count, storage |
+
+Notes:
+- `devassure open-report` requires one of `--archive`, `--session-id`, or `--last`.
+- `devassure archive-report` requires `--output-dir` and one of `--session-id` or `--last`.
+- `devassure summary` requires one of `--session-id` or `--last` (and `--json` is optional).
 
 ### Maintenance
 | Command | Description |
@@ -69,19 +76,37 @@ Package and install details: [@devassure/cli on npm](https://www.npmjs.com/packa
 | Flag | Description |
 |------|-------------|
 | `--path <path>` | Project path (default: current directory) |
-| `--csv <path>` | Path to CSV file with test cases |
+| `--csv <path>` | Path to CSV file with test cases (supports relative paths; relative order: current directory, `.devassure`. File must exist and end with `.csv`) |
 | `--tag <tags>` / `--tags` | Comma-separated tags (e.g. `--tag=smoke,regression`) |
 | `--priority <values>` / `--priorities` | Comma-separated priorities (e.g. `--priority=P0,P1`) |
 | `--folder <paths>` / `--folders` | Comma-separated folder paths |
 | `--query <string>` / `--queries` | Search query string |
 | `--filter <string>` / `--filters` | Raw filter string (overrides tag/priority/folder/query) |
-| `--archive <folder>` | Archive reports as zip after run |
+| `--archive <folder>` | Archive folder path; after run, test reports are written as `devassure-results-<session-id>.zip` into this folder (relative paths resolved from current directory) |
 | `--environment <env>` | Environment key from test_data.yaml |
 
 **Filter string syntax:** `--filter="tag = tag1,tag2 && priority = P0"`
 **Keyword search:** `--filter="query = dashboard"`
 
 If `--filter` is provided, all other filter flags are ignored.
+
+### Git Code Changes Options (`devassure test`)
+`devassure test` runs scenarios focused on git differences (branch comparison or a specific commit), while using the same test discovery as `run-tests` (YAML under the project directory).
+
+| Flag | Description |
+|------|-------------|
+| `--path <path>` | Project path (default: current directory) |
+| `--head <branch>` | Source branch (forwarded to the agent as `--source`) |
+| `--base <branch>` | Target/baseline branch (forwarded to the agent as `--target`) |
+| `--commit <sha>` | Commit to test (forwarded as `--commit-id`) |
+| `--archive <folder>` | Archive folder path for report zip output |
+| `--environment <env>` | Environment name (e.g. staging, production) |
+| `--url <url>` | Override default test URL (`test_data.default.url`) |
+| `--headless <true|false>` | Run the browser headless (omit to use project default) |
+
+Branch vs commit:
+- If you pass `--head`/`--base` or `--commit`, that mode is enabled.
+- If you omit all of `--head`, `--base`, and `--commit`, the agent uses the current branch as the source and the repository default branch as the target.
 
 ---
 
@@ -285,6 +310,11 @@ tools:
 ## Filtering Examples
 
 ```bash
+# E2E test from git code changes
+devassure test
+devassure test --head feature/login --base main
+devassure test --commit abc1234567890
+
 # By tags
 devassure run-tests --tag=smoke,regression
 
@@ -356,7 +386,7 @@ Add a top-level key in `test_data.yaml` and run with `--environment=<key>`.
 Chromium (default), Chrome, Edge. Set in `preferences.yaml`.
 
 **How to run headless?**
-Set `browsers.default.headless: true` in `preferences.yaml`.
+Set `browsers.default.headless: true` in `preferences.yaml`. (For `devassure test`, you can also override with `--headless true|false`.)
 
 **CI/CD setup?**
 Use `devassure add-token <token>` for auth, then `devassure run-tests` with desired flags. Use `--archive` to save reports and `devassure summary --last --json` for machine-readable results.

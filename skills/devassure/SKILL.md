@@ -53,6 +53,9 @@ devassure login
 
 # Token-based (for CI/CD)
 devassure add-token <your-token>
+
+# Clear stored tokens
+devassure logout
 ```
 
 ### 2. Initialize a project
@@ -60,6 +63,8 @@ devassure add-token <your-token>
 ```bash
 devassure init
 ```
+
+On first run, `devassure init` prompts for the app URL, description, and personas, and creates a sample test case file.
 
 This creates a `.devassure/` folder with:
 - `app.yaml` — App description and rules
@@ -114,8 +119,9 @@ Only `summary` and `steps` are required. Steps are written in **natural language
 ### 4. Run tests
 
 ```bash
-# Run all tests
+# Run all tests (alias: `devassure run`)
 devassure run-tests
+devassure run
 
 # Filter by tags, priority, or folder
 devassure run-tests --tag=smoke,regression --priority=P0,P1
@@ -123,14 +129,25 @@ devassure run-tests --tag=smoke,regression --priority=P0,P1
 # Run from CSV file
 devassure run-tests --csv=test-cases.csv
 
-# Archive reports after run
+# Archive reports after run (writes a report zip into the folder)
 devassure run-tests --archive=./reports
+
+# Run tests scoped to git code changes (branch/commit)
+devassure test
+devassure test --head feature/login --base main
+devassure test --commit abc1234567890
 ```
 
 ### 5. View reports
 
 ```bash
+# Open report for last session
 devassure open-report --last
+
+# Open report from an archived zip
+devassure open-report --archive=./reports/devassure-results-<session-id>.zip
+
+# JSON summary (useful for CI)
 devassure summary --last --json
 ```
 
